@@ -1,0 +1,123 @@
+#gameContainer {
+    max-width: 100%;
+    background-color:beige;
+    margin: 1em;
+    padding: 1em;
+    min-width: 510px;
+}
+
+img {
+    background-color:coral;
+    max-width: 4em;
+}
+
+#top {
+    display: grid;
+    grid-template-columns: 1fr, 1fr, 1fr;
+    grid-template-rows: 1fr, 1fr;
+    grid-template-areas: "dice dice dice"
+                        "turn . button";
+    border-style: solid;
+    padding: 1em;
+    margin: 1em;
+}
+
+#diceContainer {
+    grid-area: dice;
+    text-align: center;
+
+}
+
+#turn {
+    grid-area: turn;
+
+}
+
+#roll {
+    grid-area: button;
+    width: 5.5em;
+
+}
+
+#bottom {
+    display: grid;
+    grid-template-columns: 1fr, 1fr, 1fr;
+    grid-template-rows: auto;
+    grid-template-areas:    "num-label num-input ."
+                            "num-label num-input sumBonus"
+                            "set-label set-input ."
+                            "set-label set-input total";
+    border-style: solid;
+    padding: 2em;
+    margin: 1em;
+    gap: 1em;
+}
+
+input {
+    max-width: 1.5em;
+    font-size: 1.2em;
+    height: 1em;
+}
+
+label {
+    font-size: 1.2em;
+    height: 1em;
+}
+
+.score {
+    display: block;
+}
+
+label.score {
+    /**
+    layout af labels virker ikke uden at der er en border på, så nu har den fået en med samme farve som baggrunden.
+    **/
+    border-style: dashed;
+    border-color: beige;
+
+}
+
+#num-labels {
+    grid-area: num-label;
+}
+
+#num-inputs {
+    grid-area: num-input;
+}
+
+#set-labels {
+    grid-area: set-label;
+}
+
+#set-inputs {
+    grid-area: set-input;
+}
+
+#sumBonus {
+grid-area: sumBonus;
+text-align: right;
+
+}
+
+#total {
+    grid-area: total;
+    text-align: right;    
+}
+
+
+@media screen and (width > 1000px) {
+    #bottom {
+        grid-template-columns: 1fr, 1fr;
+        grid-template-areas:    "num-label num-input set-label set-input"
+                                 "num-label num-input set-label set-input"
+                                 ". sumBonus . total";
+    }
+
+    #sumBonus {
+        grid-area: sumBonus;
+        text-align: left;
+        }
+
+    
+}
+

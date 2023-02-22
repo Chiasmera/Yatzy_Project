@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="Yatzy.css">
+    <title>Yatzy</title>
+    <script type="text/javascript" src="Yatzy.js" defer></script>
+</head>
+<body>
+    <div id="gameContainer">
+        <div id="top">
+            <div id="diceContainer">
+                <img class="Dice" id="1" src="img/one.png">
+                <img class="Dice" id="2" src="img/two.png">
+                <img class="Dice" id="3" src="img/three.png"> 
+                <img class="Dice" id="4" src="img/four.png">
+                <img class="Dice" id="5" src="img/five.png">
+            </div>
+            <p id="turn">turn 1</p>
+            <button id="roll">Roll</button>
+        </div>
+        <div id = "bottom"> 
+            <div id="num-labels">
+                <label for="1-s" class="score num">1-s</label>
+                <label for="2-s" class="score num">2-s</label>
+                <label for="3-s" class="score num">3-s</label>
+                <label for="4-s" class="score num">4-s</label>
+                <label for="5-s" class="score num">5-s</label>
+                <label for="6-s" class="score num">6-s</label>
+            </div>
+            <div id="num-inputs">
+                <input type="text" id="1-s" class="score num">
+                <input type="text" id="2-s"class="score num">
+                <input type="text" id="3-s"class="score num">
+                <input type="text" id="4-s"class="score num">
+                <input type="text" id="5-s"class="score num">
+                <input type="text" id="6-s"class="score num">
+            </div>
+            <div id="set-labels">
+                <label for="1pair" class="score set">One pair</label>
+                <label for="2pair" class="score set">Two pairs </label>
+                <label for="3pair" class="score set">Three pairs</label>
+                <label for="4pair" class="score set">Four pairs</label>
+                <label for="full" class="score set">Full house</label>
+                <label for="small" class="score set">Small straight</label>
+                <label for="large" class="score set">Large straight</label>
+                <label for="chance" class="score set">Chance</label>
+                <label for="yatzy" class="score set">Yatzy</label>
+            </div>
+            <div id="set-inputs">
+                <input type="text" id="1pair"  class="score set">
+                <input type="text" id="2pair" class="score set">
+                <input type="text" id="3pair" class="score set">
+                <input type="text" id="4pair" class="score set">
+                <input type="text" id="full" class="score set">
+                <input type="text" id="small" class="score set">
+                <input type="text" id="large" class="score set">
+                <input type="text" id="chance" class="score set">
+                <input type="text" id="yatzy" class="score set">
+            </div>
+
+
+            <div id="sumBonus" class="calcField">
+                <label id="sum">Sum:
+                    <input type="text" >
+                </label>
+                <label  id="bonus">Bonus:
+                    <input type="text">
+                </label>
+            </div>
+
+            <label id="total" class="calcField">Total:
+                <input type="text" >
+            </label>
+        </div>
+    </div>
+</body>
+</html>
