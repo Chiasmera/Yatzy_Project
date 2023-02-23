@@ -1,14 +1,28 @@
 // TODO
 /*
-- "Lockable" attribute for at man kan unlocke i samme runde?
 - alt hvad der indebærer at beregne point
 */
 
 
 //---------- VARIABLES -----------------------------------------------------------------------------------------------------------
+/**
+ * Each die is assigned two attributes, as follows:
+ * result : An integer between 1 & 6 (inclusive). Represents the current face of the die. 
+ * locked : An integer representing the turn in which the die was locked. 0 if the die is unlocked.
+ */
 const dice = document.querySelectorAll('.Dice');
+
 const rollButton = document.querySelector('#roll');
+
+/**
+ * The turncounter is assigned one attribute:
+ * roll : an integer respresenting the number of rolls the player has made in the current round.
+ */
 const turnCounter = document.querySelector('#turn');
+
+/**
+ * This object saves the aggregated current results of all die faces, for easier calculation of scores.
+ */
 const resultsList = {
     ones : 0,
     twos : 0,
@@ -17,6 +31,7 @@ const resultsList = {
     fives : 0,
     sixes : 0
 };
+
 
 //---------- FUNCTIONS -----------------------------------------------------------------------------------------------------------
 /**
@@ -88,7 +103,7 @@ function resetAllDiceTo(result) {
  */
 function unlockDice () {
     for (let die of dice) {
-        die.locked = false;
+        die.locked = 0;
     }
 }
 
@@ -137,12 +152,12 @@ function rollUnlockedDice () {
 }
 
 /**
- * Locks a die, preventing it from being rolled. Does nothing before player has rolled the dice.
+ * Locks a die, preventing it from being rolled. If the die is already locked and was locked during the same turn, unlocks it. Does nothing before player has rolled the dice.
  * @param {image element of Dice class} die An img element with the class 'Dice'
  */
-function lockDie (die) {
-    if(turnCounter.roll !== 0) {
-        die.locked = true;
+function ToggleLocked (die) {
+    if(!die.locked && turnCounter.roll !== 0) {
+        die.locked = turnCounter.roll;
 
         switch (die.result) {
             case 1 : 
@@ -166,6 +181,10 @@ function lockDie (die) {
             default:
                 console.log(`Something went wrong setting locked image for ${die}`);
         }
+    } else if (die.locked >= turnCounter.roll) {
+        die.locked = 0;
+        setDieImage(die);
+
     }
     
 
@@ -189,8 +208,8 @@ function updateTurnCounter() {
 function resetRound () {
     resetAllDiceTo(1);
     turnCounter.roll = 0;
+    turnCounter.textContent = 'New round started!'
 }
-
 
 /**
  * Implements all sub-functions of the roll button, including: Resetting the resultlist, rolling all unlocked dice, counting the results, incrementing the roll counter and checking for amount of rolls left.
@@ -202,11 +221,12 @@ function rollButtonAction () {
     updateTurnCounter();
 }
 
+
 //---------- EVENT LISTENERS SETUP -----------------------------------------------------------------------------------------------------------
 rollButton.addEventListener('click', () => rollButtonAction())
 
 for (let die of dice) {
-    die.addEventListener('click', (e) => lockDie(e.target))
+    die.addEventListener('click', (e) => ToggleLocked(e.target))
 }
 
 

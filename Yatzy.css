@@ -1,16 +1,26 @@
 #gameContainer {
-    max-width: 100%;
     background-color:beige;
     margin: 1em;
     padding: 1em;
-    min-width: 510px;
+    min-width: fit-content;
+}
+
+#diceContainer {
+    grid-area: dice;
+    vertical-align: middle;
+    text-align: center;
+
 }
 
 img {
     background-color:coral;
     max-width: 10%;
     min-width: 5em;
+    display: inline-block;
+    vertical-align: top;
+    margin: 2%;
 }
+
 
 #top {
     display: grid;
@@ -23,21 +33,13 @@ img {
     margin: 1em;
 }
 
-#diceContainer {
-    grid-area: dice;
-    text-align: center;
-
-}
-
 #turn {
     grid-area: turn;
-
 }
 
 #roll {
     grid-area: button;
     width: 5.5em;
-
 }
 
 #bottom {
@@ -55,18 +57,23 @@ img {
 }
 
 input {
-    max-width: 1.5em;
+    max-width: 2em;
     font-size: 1.2em;
     height: 1em;
+    text-align: center;
+    margin: 5px;
 }
 
 label {
     font-size: 1.2em;
     height: 1em;
+    margin: 1%;
+    margin: 5px;
 }
 
 .score {
     display: block;
+    
 }
 
 label.score {
@@ -75,7 +82,6 @@ label.score {
     **/
     border-style: dashed;
     border-color: beige;
-
 }
 
 #num-labels {
@@ -119,4 +125,60 @@ text-align: right;
         text-align: left;
         }    
 }
+
+@media screen and (width < 600px) {
+    #bottom {
+        grid-template-columns: 2fr, 1fr;
+        grid-template-areas:    "num-label num-input"
+                                "sumBonus ."  
+                                "set-label set-input"
+                                 "total .";
+    }
+
+    #roll {
+        width: fit-content;
+        height: fit-content;
+    }
+
+    #sumBonus {
+        text-align: right;
+        } 
+
+    #total {
+        text-align: right;
+    }
+    
+    img {
+        max-width: 18%;
+        min-width:2.5em;
+    }
+        
+    input {
+        font-size: 0.9em;
+        height: 2em;
+    }
+    
+    label {
+        font-size: 0.9em;
+        height: 2em;
+        overflow: wrap;
+        
+    }
+
+    #gameContainer {
+        margin: 0.5em;
+        padding: 0.5em;
+    }
+
+    #top{
+        margin: 0.5em;
+        padding: 0.5em;
+    }
+
+    #bottom {
+        margin: 0.5em;
+        padding: 0.5em;
+    }
+}
+
 
