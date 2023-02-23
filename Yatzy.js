@@ -1,15 +1,14 @@
 // TODO
 /*
-- Tæl counter op når det rulles med terningerne
-- disable roll knap når tre rul er foretaget
-- Lav funktion til at starte ny serie af rul efter point er scoret
+- "Lockable" attribute for at man kan unlocke i samme runde?
 - alt hvad der indebærer at beregne point
 */
 
 
-
 //---------- VARIABLES -----------------------------------------------------------------------------------------------------------
 const dice = document.querySelectorAll('.Dice');
+const rollButton = document.querySelector('#roll');
+const turnCounter = document.querySelector('#turn');
 const resultsList = {
     ones : 0,
     twos : 0,
@@ -18,7 +17,6 @@ const resultsList = {
     fives : 0,
     sixes : 0
 };
-let rollCounter = 0;
 
 //---------- FUNCTIONS -----------------------------------------------------------------------------------------------------------
 /**
@@ -126,55 +124,86 @@ function countResults () {
 }
 
 /**
- * Rolls all unlocked dice, sets their images and sums up the results in the ResultList
+ * Rolls all unlocked dice, and sets their images.
  */
 function rollUnlockedDice () {
-    resetResultsList();
-
     for (let die of dice) {
         if (!die.locked) {
             rollDie(die);
             setDieImage(die);
         }
     }
-    countResults();
+    
 }
 
 /**
- * Locks a die, preventing it from being rolled
+ * Locks a die, preventing it from being rolled. Does nothing before player has rolled the dice.
  * @param {image element of Dice class} die An img element with the class 'Dice'
  */
 function lockDie (die) {
-    die.locked = true;
+    if(turnCounter.roll !== 0) {
+        die.locked = true;
 
-    switch (die.result) {
-        case 1 : 
-            die.src = 'img/one_alt.png';
-            break;
-        case 2 : 
-            die.src = 'img/two_alt.png';
-            break;
-        case 3 : 
-            die.src = 'img/three_alt.png';
-            break;
-        case 4 : 
-            die.src = 'img/four_alt.png';
-            break;
-        case 5 : 
-            die.src = 'img/five_alt.png';
-            break;
-        case 6 : 
-            die.src = 'img/six_alt.png';
-            break;
-        default:
-            console.log(`Something went wrong setting locked image for ${die}`);
+        switch (die.result) {
+            case 1 : 
+                die.src = 'img/one_alt.png';
+                break;
+            case 2 : 
+                die.src = 'img/two_alt.png';
+                break;
+            case 3 : 
+                die.src = 'img/three_alt.png';
+                break;
+            case 4 : 
+                die.src = 'img/four_alt.png';
+                break;
+            case 5 : 
+                die.src = 'img/five_alt.png';
+                break;
+            case 6 : 
+                die.src = 'img/six_alt.png';
+                break;
+            default:
+                console.log(`Something went wrong setting locked image for ${die}`);
+        }
     }
+    
 
 }
 
+/**
+ * Check if all 3 rolls for this try have been used, and if so, disable the roll button
+ */
+function updateTurnCounter() {
+    turnCounter.roll++;
+    turnCounter.textContent = `Turn ${turnCounter.roll}`;
+
+    if (turnCounter.roll >= 3) {
+        rollButton.disabled = true;
+    }
+}
+
+/**
+ * Resets all dice and sets the turn counter to 0;
+ */
+function resetRound () {
+    resetAllDiceTo(1);
+    turnCounter.roll = 0;
+}
+
+
+/**
+ * Implements all sub-functions of the roll button, including: Resetting the resultlist, rolling all unlocked dice, counting the results, incrementing the roll counter and checking for amount of rolls left.
+ */
+function rollButtonAction () {
+    resetResultsList();
+    rollUnlockedDice();
+    countResults();
+    updateTurnCounter();
+}
+
 //---------- EVENT LISTENERS SETUP -----------------------------------------------------------------------------------------------------------
-const rollButton = document.querySelector('#roll');
-rollButton.addEventListener('click', () => rollUnlockedDice())
+rollButton.addEventListener('click', () => rollButtonAction())
 
 for (let die of dice) {
     die.addEventListener('click', (e) => lockDie(e.target))
@@ -182,4 +211,4 @@ for (let die of dice) {
 
 
 //---------- INITIAL SETUP -----------------------------------------------------------------------------------------------------------
-resetAllDiceTo(1);
+resetRound();

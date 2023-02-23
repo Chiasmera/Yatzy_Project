@@ -8,7 +8,8 @@
 
 img {
     background-color:coral;
-    max-width: 4em;
+    max-width: 10%;
+    min-width: 5em;
 }
 
 #top {
@@ -116,8 +117,6 @@ text-align: right;
     #sumBonus {
         grid-area: sumBonus;
         text-align: left;
-        }
-
-    
+        }    
 }
 
