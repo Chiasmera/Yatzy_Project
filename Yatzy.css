@@ -18,7 +18,7 @@ img {
     min-width: 5em;
     display: inline-block;
     vertical-align: top;
-    margin: 2%;
+    margin: 1.5%;
 }
 
 
@@ -40,6 +40,8 @@ img {
 #roll {
     grid-area: button;
     width: 5.5em;
+    height: 4em;
+    margin: 1em;
 }
 
 #bottom {
@@ -126,7 +128,7 @@ text-align: right;
         }    
 }
 
-@media screen and (width < 600px) {
+@media screen and (width < 700px) {
     #bottom {
         grid-template-columns: 2fr, 1fr;
         grid-template-areas:    "num-label num-input"
@@ -136,8 +138,8 @@ text-align: right;
     }
 
     #roll {
-        width: fit-content;
-        height: fit-content;
+        width: 4em;
+        height: 3em;
     }
 
     #sumBonus {
@@ -151,6 +153,7 @@ text-align: right;
     img {
         max-width: 18%;
         min-width:2.5em;
+        margin: 0%;
     }
         
     input {

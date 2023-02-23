@@ -33,7 +33,11 @@ const resultsList = {
 };
 
 
+
+
 //---------- FUNCTIONS -----------------------------------------------------------------------------------------------------------
+
+//___________Top_Functions__________________________________________
 /**
  * Sets the (normal) image of a die to the image corresponding to the result value of the die
  * @param {image element of Dice class} die An img element with the class 'Dice'
@@ -209,6 +213,9 @@ function resetRound () {
     resetAllDiceTo(1);
     turnCounter.roll = 0;
     turnCounter.textContent = 'New round started!'
+    rollButton.disabled = false;
+
+
 }
 
 /**
@@ -219,6 +226,89 @@ function rollButtonAction () {
     rollUnlockedDice();
     countResults();
     updateTurnCounter();
+
+    calcScores();
+}
+
+//___________Bottom_Functions__________________________________________
+document.querySelector('#ones').calcScore = () => resultsList.ones;
+document.querySelector('#twos').calcScore = () => resultsList.twos *2,
+document.querySelector('#threes').calcScore = () => resultsList.threes *3,
+document.querySelector('#fours').calcScore = () => resultsList.fours *4,
+document.querySelector('#fives').calcScore = () => resultsList.fives *5,
+document.querySelector('#sixes').calcScore = () => resultsList.sixes *6,
+document.querySelector('#sum').calcScore = () => {
+    //TODO - Fix this. It does not calculate properly
+    let runningSum = 0;
+    for (let field of document.querySelectorAll('input.num')) {
+        if (field.locked) {
+          runningSum =+ field.value;
+          
+        }
+    }
+    return runningSum;
+};
+document.querySelector('#bonus').calcScore = () => 0;
+document.querySelector('#onePair').calcScore = () =>0;
+document.querySelector('#twoPair').calcScore = () =>0;
+document.querySelector('#threePair').calcScore = () =>0;
+document.querySelector('#fourPair').calcScore = () =>0;
+document.querySelector('#full').calcScore = () =>0;
+document.querySelector('#small').calcScore = () =>0;
+document.querySelector('#large').calcScore = () =>0;
+document.querySelector('#chance').calcScore = () =>0;
+document.querySelector('#yatzy').calcScore = () =>0;
+document.querySelector('#total').calcScore = () =>0;
+
+
+/**
+ * Sets all fields to read only, to prevent a player from editing scores directly
+ */
+function setFieldsReadOnly () {
+    for (let field of document.querySelectorAll('input')) {
+        field.readOnly = true;
+    }
+}
+
+/**
+ * Resets all fields to 0 value, and unlocks them
+ */
+function resetAllScores () {
+    for (let field of document.querySelectorAll('input')) {
+        field.value = 0;
+        field.locked = false;
+    }
+}
+
+/**
+ * Iterates through all non-locked score fields and evokes their corresponding calculation function, as stored in the calculationFunctions object.
+ */
+function calcScores () {
+    for (let field of document.querySelectorAll('input')) {
+        if (!field.locked){
+           field.value = field.calcScore();
+        }
+    }
+}
+
+/**
+ * disabled a score field and sets its Locked attribute to true.
+ * @param {text input} field 
+ */
+function lockScoreField (field) {
+    if (turnCounter.roll !== 0) {
+        field.disabled = true;
+        field.locked = true;
+    }
+
+}
+
+function lockInScore (field) {
+    lockScoreField(field);
+    for (let field of document.querySelectorAll('input.calcField')) {
+        field.calcScore;
+    }
+    resetRound();
 }
 
 
@@ -229,6 +319,17 @@ for (let die of dice) {
     die.addEventListener('click', (e) => ToggleLocked(e.target))
 }
 
+for (let field of document.querySelectorAll('input.score')) {
+    field.addEventListener('click', (e) => lockInScore(e.target))
+}
+
 
 //---------- INITIAL SETUP -----------------------------------------------------------------------------------------------------------
+setFieldsReadOnly();
+resetAllScores();
 resetRound();
+
+
+
+
+
