@@ -1,6 +1,10 @@
 // TODO
 /*
-- alt hvad der indebærer at beregne point
+- Fix SUM feltets beregningsfunktion
+- resterende feltberegninger ift point
+- Check for hvornår spillet slutter
+- Alert som viser point
+- Mulighed for at genstarte spil
 */
 
 
