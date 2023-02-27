@@ -253,15 +253,15 @@ document.querySelector('#twos').calcScore = () => resultsList.twos * 2,
         return runningSum;
     };
 document.querySelector('#bonus').calcScore = () => 0;
-document.querySelector('#onePair').calcScore = () => 0;
-document.querySelector('#twoPair').calcScore = () => 0;
-document.querySelector('#threePair').calcScore = () => 0;
-document.querySelector('#fourPair').calcScore = () => 0;
-document.querySelector('#full').calcScore = () => 0;
-document.querySelector('#small').calcScore = () => 0;
-document.querySelector('#large').calcScore = () => 0;
-document.querySelector('#chance').calcScore = () => 0;
-document.querySelector('#yatzy').calcScore = () => 0;
+document.querySelector('#onePair').calcScore = () => onePairPoints();
+document.querySelector('#twoPair').calcScore = () => twoPairPoints();
+document.querySelector('#threePair').calcScore = () => threeSamePoints();
+document.querySelector('#fourPair').calcScore = () => fourSamePoints();
+document.querySelector('#full').calcScore = () => fullHousePoints();
+document.querySelector('#small').calcScore = () => smallStraightPoints();
+document.querySelector('#large').calcScore = () => largeStraightPoints();
+document.querySelector('#chance').calcScore = () => chancePoints();
+document.querySelector('#yatzy').calcScore = () => yatzyPoints();
 document.querySelector('#total').calcScore = () => 0;
 
 
@@ -342,7 +342,7 @@ resetRound();
  */
 let onePairPoints = () => {
     let maxIndex = pairs = 0; 
-    let counts = calcCounts();
+    let counts = updateTurnCounter();
     for (let i of counts) {
         if (counts[i] == pairs && i > maxIndex) {
             maxIndex = i;
@@ -358,7 +358,7 @@ let onePairPoints = () => {
  */
 let twoPairPoints = () => {
     let pair1 = pair2 = result = 0;
-    let counts = calcCounts();
+    let counts = updateTurnCounter();
     for (let i of counts) {
         if (counts[i] >= 2) {
             if (pair1 == 0) {
@@ -381,8 +381,8 @@ let twoPairPoints = () => {
 let threeSamePoints = () => {
     let maxIndex = 0;
     let three = 3;
-    let counter = calcCounts();
-    for (let i of counter) {
+    let counter = resultsList;
+    for (let i in counter) {
         if (counter[i] >= three) {
             maxIndex = i;
 
@@ -398,9 +398,9 @@ let threeSamePoints = () => {
 let fourSamePoints = () => {
     let maxIndex = 0;
     let four = 4;
-    let counter = calcCounts();
+    let counter = resultsList;
     for (let i of counter) {
-        if (counter[i] >= four) {
+        if (i >= four) {
             maxIndex = i;
         }
     }
@@ -414,7 +414,7 @@ let fourSamePoints = () => {
  */
 fullHousePoints = () => {
     let two = three = result = 0;
-    let counter = calcCounts();
+    let counter = resultsList;
     for (let i of counter) {
         if (counter[i] == 2) {
             two = i;
@@ -436,7 +436,7 @@ fullHousePoints = () => {
  */
 let smallStraightPoints = () => {
     let number = result = 0;
-    let counter = calcCounts();
+    let counter = resultsList;
     for (let i of counter) {
         if (counter[i] == 1 && i != 6) {
             number++;
@@ -454,7 +454,7 @@ let smallStraightPoints = () => {
  */
 let largeStraightPoints = () => {
     let number = result = 0;
-    let counter = calcCounts();
+    let counter = resultsList;
     for (let i of counter) {
     
         if (counter[i] == 1 && i != 1) {
@@ -486,7 +486,7 @@ let chancePoints = () => {
 let yatzyPoints = () => {
     let maxIndex = 0;
     let five = 5;
-    let counter = calcCounts();
+    let counter = resultsList;
     for (let i in object) {
         if (counter[i] == five) {
             maxIndex = 50;
