@@ -237,22 +237,10 @@ function rollButtonAction() {
 //___________Bottom_Functions__________________________________________
 document.querySelector('#ones').calcScore = () => resultsList.ones;
 document.querySelector('#twos').calcScore = () => resultsList.twos * 2,
-    document.querySelector('#threes').calcScore = () => resultsList.threes * 3,
-    document.querySelector('#fours').calcScore = () => resultsList.fours * 4,
-    document.querySelector('#fives').calcScore = () => resultsList.fives * 5,
-    document.querySelector('#sixes').calcScore = () => resultsList.sixes * 6,
-    document.querySelector('#sum').calcScore = () => {
-        //TODO - Fix this. It does not calculate properly
-        let runningSum = 0;
-        for (let field of document.querySelectorAll('input.num')) {
-            if (field.locked) {
-                runningSum = + field.value;
-
-            }
-        }
-        return runningSum;
-    };
-document.querySelector('#bonus').calcScore = () => 0;
+document.querySelector('#threes').calcScore = () => resultsList.threes * 3,
+document.querySelector('#fours').calcScore = () => resultsList.fours * 4,
+document.querySelector('#fives').calcScore = () => resultsList.fives * 5,
+document.querySelector('#sixes').calcScore = () => resultsList.sixes * 6,
 document.querySelector('#onePair').calcScore = () => onePairPoints();
 document.querySelector('#twoPair').calcScore = () => twoPairPoints();
 document.querySelector('#threePair').calcScore = () => threeSamePoints();
@@ -262,7 +250,7 @@ document.querySelector('#small').calcScore = () => smallStraightPoints();
 document.querySelector('#large').calcScore = () => largeStraightPoints();
 document.querySelector('#chance').calcScore = () => chancePoints();
 document.querySelector('#yatzy').calcScore = () => yatzyPoints();
-document.querySelector('#total').calcScore = () => 0;
+
 
 
 /**
@@ -288,11 +276,27 @@ function resetAllScores() {
  * Iterates through all non-locked score fields and evokes their corresponding calculation function, as stored in the calculationFunctions object.
  */
 function calcAllScoreFields() {
-    for (let field of document.querySelectorAll('input')) {
+    for (let field of document.querySelectorAll('input.score')) {
         if (!field.locked) {
+
             field.value = field.calcScore();
+
+            
+
         }
     }
+}
+
+function calculateNumbersSum () {
+        let runningSum = 0;
+        for (let field of document.querySelectorAll('input.num')) {
+            
+            if (field.locked) {
+                runningSum += parseInt(field.value);
+            }
+        }
+        
+        document.querySelector('#sum').value = runningSum;
 }
 
 /**
@@ -313,6 +317,7 @@ function lockInScore(field) {
         field.calcScore;
     }
     resetRound();
+    calculateNumbersSum();
 }
 
 
