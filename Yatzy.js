@@ -28,12 +28,12 @@ const turnCounter = document.querySelector('#turn');
  * This object saves the aggregated current results of all die faces, for easier calculation of scores.
  */
 const resultsList = {
-    ones : 0,
-    twos : 0,
+    ones: 0,
+    twos: 0,
     threes: 0,
-    fours : 0,
-    fives : 0,
-    sixes : 0
+    fours: 0,
+    fives: 0,
+    sixes: 0
 };
 
 
@@ -46,24 +46,24 @@ const resultsList = {
  * Sets the (normal) image of a die to the image corresponding to the result value of the die
  * @param {image element of Dice class} die An img element with the class 'Dice'
  */
-function setDieImage (die) {
+function setDieImage(die) {
     switch (die.result) {
-        case 1 : 
+        case 1:
             die.src = 'img/one.png';
             break;
-        case 2 : 
+        case 2:
             die.src = 'img/two.png';
             break;
-        case 3 : 
+        case 3:
             die.src = 'img/three.png';
             break;
-        case 4 : 
+        case 4:
             die.src = 'img/four.png';
             break;
-        case 5 : 
+        case 5:
             die.src = 'img/five.png';
             break;
-        case 6 : 
+        case 6:
             die.src = 'img/six.png';
             break;
         default:
@@ -75,9 +75,9 @@ function setDieImage (die) {
  * Generates a random number between 1 & 6, and assigns it to the Result attribute of the given die.
  * @param {image element of Dice class} die An img element with the class 'Dice'
  */
-function rollDie (die) {
+function rollDie(die) {
     //Generate random number and assign to result
-    let randNum = Math.floor(Math.random()*6+1);
+    let randNum = Math.floor(Math.random() * 6 + 1);
     die.result = randNum;
 
 }
@@ -85,7 +85,7 @@ function rollDie (die) {
 /**
  * Resets all values in the resultslist to 0;
  */
-function resetResultsList () {
+function resetResultsList() {
     resultsList.ones = 0;
     resultsList.twos = 0;
     resultsList.threes = 0;
@@ -109,7 +109,7 @@ function resetAllDiceTo(result) {
 /**
  * Unlocks all dice
  */
-function unlockDice () {
+function unlockDice() {
     for (let die of dice) {
         die.locked = 0;
     }
@@ -118,72 +118,72 @@ function unlockDice () {
 /**
  * Counts the results of all dice and updates the resultList accordingly
  */
-function countResults () {
+function countResults() {
     for (let die of dice) {
         switch (die.result) {
-        case 1 : 
-            resultsList.ones++;
-            break;
-        case 2 : 
-            resultsList.twos++;
-            break;
-        case 3 : 
-            resultsList.threes++;
-            break;
-        case 4 : 
-            resultsList.fours++;
-            break;
-        case 5 : 
-            resultsList.fives++;
-            break;
-        case 6 : 
-        resultsList.sixes++;
-            break;
-        default:
-            console.log(`Something went wrong counting result for ${die}`);
+            case 1:
+                resultsList.ones++;
+                break;
+            case 2:
+                resultsList.twos++;
+                break;
+            case 3:
+                resultsList.threes++;
+                break;
+            case 4:
+                resultsList.fours++;
+                break;
+            case 5:
+                resultsList.fives++;
+                break;
+            case 6:
+                resultsList.sixes++;
+                break;
+            default:
+                console.log(`Something went wrong counting result for ${die}`);
         }
     }
-    
+
 }
 
 /**
  * Rolls all unlocked dice, and sets their images.
  */
-function rollUnlockedDice () {
+function rollUnlockedDice() {
     for (let die of dice) {
         if (!die.locked) {
             rollDie(die);
             setDieImage(die);
         }
     }
-    
+
 }
 
 /**
  * Locks a die, preventing it from being rolled. If the die is already locked and was locked during the same turn, unlocks it. Does nothing before player has rolled the dice.
  * @param {image element of Dice class} die An img element with the class 'Dice'
  */
-function ToggleLocked (die) {
-    if(!die.locked && turnCounter.roll !== 0) {
+function ToggleLocked(die) {
+    if (!die.locked && turnCounter.roll !== 0) {
         die.locked = turnCounter.roll;
 
         switch (die.result) {
-            case 1 : 
+            case 1:
                 die.src = 'img/one_alt.png';
                 break;
-            case 2 : 
+            case 2:
                 die.src = 'img/two_alt.png';
                 break;
-            case 3 : 
+            case 3:
                 die.src = 'img/three_alt.png';
                 break;
-            case 4 : 
+            case 4:
                 die.src = 'img/four_alt.png';
                 break;
-            case 5 : 
+            case 5:
                 die.src = 'img/five_alt.png';
                 break;
-            case 6 : 
+            case 6:
                 die.src = 'img/six_alt.png';
                 break;
             default:
@@ -194,7 +194,7 @@ function ToggleLocked (die) {
         setDieImage(die);
 
     }
-    
+
 
 }
 
@@ -213,7 +213,7 @@ function updateTurnCounter() {
 /**
  * Resets all dice and sets the turn counter to 0;
  */
-function resetRound () {
+function resetRound() {
     resetAllDiceTo(1);
     turnCounter.roll = 0;
     turnCounter.textContent = 'New round started!'
@@ -225,7 +225,7 @@ function resetRound () {
 /**
  * Implements all sub-functions of the roll button, including: Resetting the resultlist, rolling all unlocked dice, counting the results, incrementing the roll counter and checking for amount of rolls left.
  */
-function rollButtonAction () {
+function rollButtonAction() {
     resetResultsList();
     rollUnlockedDice();
     countResults();
@@ -236,39 +236,39 @@ function rollButtonAction () {
 
 //___________Bottom_Functions__________________________________________
 document.querySelector('#ones').calcScore = () => resultsList.ones;
-document.querySelector('#twos').calcScore = () => resultsList.twos *2,
-document.querySelector('#threes').calcScore = () => resultsList.threes *3,
-document.querySelector('#fours').calcScore = () => resultsList.fours *4,
-document.querySelector('#fives').calcScore = () => resultsList.fives *5,
-document.querySelector('#sixes').calcScore = () => resultsList.sixes *6,
-document.querySelector('#sum').calcScore = () => {
-    //TODO - Fix this. It does not calculate properly
-    let runningSum = 0;
-    for (let field of document.querySelectorAll('input.num')) {
-        if (field.locked) {
-          runningSum =+ field.value;
-          
+document.querySelector('#twos').calcScore = () => resultsList.twos * 2,
+    document.querySelector('#threes').calcScore = () => resultsList.threes * 3,
+    document.querySelector('#fours').calcScore = () => resultsList.fours * 4,
+    document.querySelector('#fives').calcScore = () => resultsList.fives * 5,
+    document.querySelector('#sixes').calcScore = () => resultsList.sixes * 6,
+    document.querySelector('#sum').calcScore = () => {
+        //TODO - Fix this. It does not calculate properly
+        let runningSum = 0;
+        for (let field of document.querySelectorAll('input.num')) {
+            if (field.locked) {
+                runningSum = + field.value;
+
+            }
         }
-    }
-    return runningSum;
-};
+        return runningSum;
+    };
 document.querySelector('#bonus').calcScore = () => 0;
-document.querySelector('#onePair').calcScore = () =>0;
-document.querySelector('#twoPair').calcScore = () =>0;
-document.querySelector('#threePair').calcScore = () =>0;
-document.querySelector('#fourPair').calcScore = () =>0;
-document.querySelector('#full').calcScore = () =>0;
-document.querySelector('#small').calcScore = () =>0;
-document.querySelector('#large').calcScore = () =>0;
-document.querySelector('#chance').calcScore = () =>0;
-document.querySelector('#yatzy').calcScore = () =>0;
-document.querySelector('#total').calcScore = () =>0;
+document.querySelector('#onePair').calcScore = () => 0;
+document.querySelector('#twoPair').calcScore = () => 0;
+document.querySelector('#threePair').calcScore = () => 0;
+document.querySelector('#fourPair').calcScore = () => 0;
+document.querySelector('#full').calcScore = () => 0;
+document.querySelector('#small').calcScore = () => 0;
+document.querySelector('#large').calcScore = () => 0;
+document.querySelector('#chance').calcScore = () => 0;
+document.querySelector('#yatzy').calcScore = () => 0;
+document.querySelector('#total').calcScore = () => 0;
 
 
 /**
  * Sets all fields to read only, to prevent a player from editing scores directly
  */
-function setFieldsReadOnly () {
+function setFieldsReadOnly() {
     for (let field of document.querySelectorAll('input')) {
         field.readOnly = true;
     }
@@ -277,7 +277,7 @@ function setFieldsReadOnly () {
 /**
  * Resets all fields to 0 value, and unlocks them
  */
-function resetAllScores () {
+function resetAllScores() {
     for (let field of document.querySelectorAll('input')) {
         field.value = 0;
         field.locked = false;
@@ -287,10 +287,10 @@ function resetAllScores () {
 /**
  * Iterates through all non-locked score fields and evokes their corresponding calculation function, as stored in the calculationFunctions object.
  */
-function calcScores () {
+function calcScores() {
     for (let field of document.querySelectorAll('input')) {
-        if (!field.locked){
-           field.value = field.calcScore();
+        if (!field.locked) {
+            field.value = field.calcScore();
         }
     }
 }
@@ -299,7 +299,7 @@ function calcScores () {
  * disabled a score field and sets its Locked attribute to true.
  * @param {text input} field 
  */
-function lockScoreField (field) {
+function lockScoreField(field) {
     if (turnCounter.roll !== 0) {
         field.disabled = true;
         field.locked = true;
@@ -307,7 +307,7 @@ function lockScoreField (field) {
 
 }
 
-function lockInScore (field) {
+function lockInScore(field) {
     lockScoreField(field);
     for (let field of document.querySelectorAll('input.calcField')) {
         field.calcScore;
@@ -336,4 +336,164 @@ resetRound();
 
 
 
+/**
+ * Returns points for one pair (for the face value giving highest points).
+ * Returns 0, if there aren't 2 dice with the same face value.
+ */
+let onePairPoints = () => {
+    let maxIndex = pairs = 0; 
+    let counts = calcCounts();
+    for (let i of counts) {
+        if (counts[i] == pairs && i > maxIndex) {
+            maxIndex = i;
+        }
+    }
+    return maxIndex * 2;
+}
+
+/**
+ * Returns points for two pairs (for the 2 face values giving highest
+ * points). Returns 0, if there aren't 2 dice with one face value and 2 dice
+ * with a different face value.
+ */
+let twoPairPoints = () => {
+    let pair1 = pair2 = result = 0;
+    let counts = calcCounts();
+    for (let i of counts) {
+        if (counts[i] >= 2) {
+            if (pair1 == 0) {
+                pair1 = i * 2;
+            } else {
+                pair2 = i * 2;
+                result = pair1 + pair2;
+            }
+
+        }
+    }
+    return result;
+}
+
+
+/**
+ * Returns points for 3 of a kind. Returns 0, if there aren't 3 dice with
+ * the same face value.
+ */
+let threeSamePoints = () => {
+    let maxIndex = 0;
+    let three = 3;
+    let counter = calcCounts();
+    for (let i of counter) {
+        if (counter[i] >= three) {
+            maxIndex = i;
+
+        }
+    }
+    return maxIndex * three;
+}
+
+/**
+ * Returns points for 4 of a kind. Returns 0, if there aren't 4 dice with
+ * the same face value.
+ */
+let fourSamePoints = () => {
+    let maxIndex = 0;
+    let four = 4;
+    let counter = calcCounts();
+    for (let i of counter) {
+        if (counter[i] >= four) {
+            maxIndex = i;
+        }
+    }
+    return maxIndex * four;
+
+}
+
+/**
+ * Returns points for full house. Returns 0, if there aren't 3 dice with one
+ * face value and 2 dice a different face value.
+ */
+fullHousePoints = () => {
+    let two = three = result = 0;
+    let counter = calcCounts();
+    for (let i of counter) {
+        if (counter[i] == 2) {
+            two = i;
+        }
+        if (counter[i] == 3) {
+            three = i;
+        }
+        if (two != 0 && three != 0) {
+            result = two * 2 + three * 3;
+        }
+
+    }
+    return result;
+}
+
+/**
+ * Returns points for small straight. Returns 0, if the dice are not showing
+ * 1,2,3,4,5.
+ */
+let smallStraightPoints = () => {
+    let number = result = 0;
+    let counter = calcCounts();
+    for (let i of counter) {
+        if (counter[i] == 1 && i != 6) {
+            number++;
+        }
+        if (number == 5) {
+            result = 1 + 2 + 3 + 4 + 5;
+        }
+    }
+    return result;
+}
+
+/**
+ * Returns points for large straight. Returns 0, if the dice is not showing
+ * 2,3,4,5,6.
+ */
+let largeStraightPoints = () => {
+    let number = result = 0;
+    let counter = calcCounts();
+    for (let i of counter) {
+    
+        if (counter[i] == 1 && i != 1) {
+            number++;
+        }
+        if (number == 5) {
+            result = 2 + 3 + 4 + 5 + 6;
+        }
+
+    }
+    return result;
+}
+
+/**
+ * Returns points for chance.
+ */
+let chancePoints = () => {
+    let sum = 0;
+    for (let value of diceValues) {
+        sum += value;
+    }
+    return sum;
+}
+
+/**
+ * Returns points for yatzy. Returns 0, if there aren't 5 dice with the same
+ * face value.
+ */
+let yatzyPoints = () => {
+    let maxIndex = 0;
+    let five = 5;
+    let counter = calcCounts();
+    for (let i in object) {
+        if (counter[i] == five) {
+            maxIndex = 50;
+            break;
+        }
+    }
+    return maxIndex;
+
+}
 
