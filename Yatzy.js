@@ -498,8 +498,25 @@ function lockInScore(field) {
     for (let field of document.querySelectorAll('input.calcField')) {
         field.calcScore;
     }
-    resetRound();
+    
     calculateTotal();
+
+    if (checkForGameEnd()) {
+        //gør noget
+    } else {
+        resetRound();
+    }
+    
+}
+
+function checkForGameEnd() {
+    let scoreFields = document.querySelectorAll('score');
+    for (let field of scoreFields) {
+        if (!field.locked) {
+            return false;
+        }
+    }
+    return true;
 }
 
 
