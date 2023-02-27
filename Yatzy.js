@@ -344,7 +344,7 @@ let onePairPoints = () => {
     let maxIndex = 0, pairs = 0; 
     let counts = resultsList;
     for (let i of counts) {
-        if (counts[i] == pairs && i > maxIndex) {
+        if (i == pairs && i > maxIndex) {
             maxIndex = i;
         }
     }
@@ -360,7 +360,7 @@ let twoPairPoints = () => {
     let pair1 = 0, pair2 = 0, result = 0;
     let counts = resultsList;
     for (let i of counts) {
-        if (counts[i] >= 2) {
+        if (i >= 2) {
             if (pair1 == 0) {
                 pair1 = i * 2;
             } else {
@@ -383,7 +383,7 @@ let threeSamePoints = () => {
     let three = 3;
     let counter = resultsList;
     for (let i in counter) {
-        if (counter[i] >= three) {
+        if (i >= three) {
             maxIndex = i;
 
         }
@@ -416,10 +416,10 @@ fullHousePoints = () => {
     let two = 0, three = 0, result = 0;
     let counter = resultsList;
     for (let i of counter) {
-        if (counter[i] == 2) {
+        if (i == 2) {
             two = i;
         }
-        if (counter[i] == 3) {
+        if (i== 3) {
             three = i;
         }
         if (two != 0 && three != 0) {
@@ -438,7 +438,7 @@ let smallStraightPoints = () => {
     let number = 0, result = 0;
     let counter = resultsList;
     for (let i of counter) {
-        if (counter[i] == 1 && i != 6) {
+        if (i == 1 && i != 6) {
             number++;
         }
         if (number == 5) {
@@ -457,7 +457,7 @@ let largeStraightPoints = () => {
     let counter = resultsList;
     for (let i of counter) {
     
-        if (counter[i] == 1 && i != 1) {
+        if (i == 1 && i != 1) {
             number++;
         }
         if (number == 5) {
@@ -487,8 +487,8 @@ let yatzyPoints = () => {
     let maxIndex = 0;
     let five = 5;
     let counter = resultsList;
-    for (let i in object) {
-        if (counter[i] == five) {
+    for (let i in counter) {
+        if (i == five) {
             maxIndex = 50;
             break;
         }
