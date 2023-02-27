@@ -1,7 +1,5 @@
 // TODO
 /*
-- Fix SUM feltets beregningsfunktion
-- resterende feltberegninger ift point
 - Check for hvornår spillet slutter
 - Alert som viser point
 - Mulighed for at genstarte spil
@@ -234,114 +232,6 @@ function rollButtonAction() {
     calcAllScoreFields();
 }
 
-//___________Bottom_Functions__________________________________________
-document.querySelector('#ones').calcScore = () => resultsList.ones;
-document.querySelector('#twos').calcScore = () => resultsList.twos * 2,
-document.querySelector('#threes').calcScore = () => resultsList.threes * 3,
-document.querySelector('#fours').calcScore = () => resultsList.fours * 4,
-document.querySelector('#fives').calcScore = () => resultsList.fives * 5,
-document.querySelector('#sixes').calcScore = () => resultsList.sixes * 6,
-document.querySelector('#onePair').calcScore = () => onePairPoints();
-document.querySelector('#twoPair').calcScore = () => twoPairPoints();
-document.querySelector('#threePair').calcScore = () => threeSamePoints();
-document.querySelector('#fourPair').calcScore = () => fourSamePoints();
-document.querySelector('#full').calcScore = () => fullHousePoints();
-document.querySelector('#small').calcScore = () => smallStraightPoints();
-document.querySelector('#large').calcScore = () => largeStraightPoints();
-document.querySelector('#chance').calcScore = () => chancePoints();
-document.querySelector('#yatzy').calcScore = () => yatzyPoints();
-
-
-
-/**
- * Sets all fields to read only, to prevent a player from editing scores directly
- */
-function setFieldsReadOnly() {
-    for (let field of document.querySelectorAll('input')) {
-        field.readOnly = true;
-    }
-}
-
-/**
- * Resets all fields to 0 value, and unlocks them
- */
-function resetAllScores() {
-    for (let field of document.querySelectorAll('input')) {
-        field.value = 0;
-        field.locked = false;
-    }
-}
-
-/**
- * Iterates through all non-locked score fields and evokes their corresponding calculation function, as stored in the calculationFunctions object.
- */
-function calcAllScoreFields() {
-    for (let field of document.querySelectorAll('input.score')) {
-        if (!field.locked) {
-
-            field.value = field.calcScore();
-
-            
-
-        }
-    }
-}
-
-function calculateNumbersSum () {
-        let runningSum = 0;
-        for (let field of document.querySelectorAll('input.num')) {
-            
-            if (field.locked) {
-                runningSum += parseInt(field.value);
-            }
-        }
-        
-        document.querySelector('#sum').value = runningSum;
-}
-
-/**
- * disabled a score field and sets its Locked attribute to true.
- * @param {text input} field 
- */
-function lockScoreField(field) {
-    if (turnCounter.roll !== 0) {
-        field.disabled = true;
-        field.locked = true;
-    }
-
-}
-
-function lockInScore(field) {
-    lockScoreField(field);
-    for (let field of document.querySelectorAll('input.calcField')) {
-        field.calcScore;
-    }
-    resetRound();
-    calculateNumbersSum();
-}
-
-
-//---------- EVENT LISTENERS SETUP -----------------------------------------------------------------------------------------------------------
-rollButton.addEventListener('click', () => rollButtonAction())
-
-for (let die of dice) {
-    die.addEventListener('click', (e) => ToggleLocked(e.target))
-}
-
-for (let field of document.querySelectorAll('input.score')) {
-    field.addEventListener('click', (e) => lockInScore(e.target))
-}
-
-
-//---------- INITIAL SETUP -----------------------------------------------------------------------------------------------------------
-setFieldsReadOnly();
-resetAllScores();
-resetRound();
-
-
-
-
-
 /**
  * Returns points for one pair (for the face value giving highest points).
  * Returns 0, if there aren't 2 dice with the same face value.
@@ -505,4 +395,134 @@ let yatzyPoints = () => {
     return maxIndex;
 
 }
+
+//___________Bottom_Functions__________________________________________
+document.querySelector('#ones').calcScore = () => resultsList.ones;
+document.querySelector('#twos').calcScore = () => resultsList.twos * 2,
+document.querySelector('#threes').calcScore = () => resultsList.threes * 3,
+document.querySelector('#fours').calcScore = () => resultsList.fours * 4,
+document.querySelector('#fives').calcScore = () => resultsList.fives * 5,
+document.querySelector('#sixes').calcScore = () => resultsList.sixes * 6,
+document.querySelector('#onePair').calcScore = () => onePairPoints();
+document.querySelector('#twoPair').calcScore = () => twoPairPoints();
+document.querySelector('#threePair').calcScore = () => threeSamePoints();
+document.querySelector('#fourPair').calcScore = () => fourSamePoints();
+document.querySelector('#full').calcScore = () => fullHousePoints();
+document.querySelector('#small').calcScore = () => smallStraightPoints();
+document.querySelector('#large').calcScore = () => largeStraightPoints();
+document.querySelector('#chance').calcScore = () => chancePoints();
+document.querySelector('#yatzy').calcScore = () => yatzyPoints();
+
+
+
+/**
+ * Sets all fields to read only, to prevent a player from editing scores directly
+ */
+function setFieldsReadOnly() {
+    for (let field of document.querySelectorAll('input')) {
+        field.readOnly = true;
+    }
+}
+
+/**
+ * Resets all fields to 0 value, and unlocks them
+ */
+function resetAllScores() {
+    for (let field of document.querySelectorAll('input')) {
+        field.value = 0;
+        field.locked = false;
+    }
+}
+
+/**
+ * Iterates through all non-locked score fields and evokes their corresponding calculation function, as stored in the calculationFunctions object.
+ */
+function calcAllScoreFields() {
+    for (let field of document.querySelectorAll('input.score')) {
+        if (!field.locked) {
+
+            field.value = field.calcScore();
+
+            
+
+        }
+    }
+}
+
+function calculateSumAndBonus () {
+        let runningSum = 0;
+        for (let field of document.querySelectorAll('input.num')) {
+            
+            if (field.locked) {
+                runningSum += parseInt(field.value);
+            }
+        }
+        
+        let sumField = document.querySelector('#sum');
+        sumField.value = runningSum;
+
+        let bonusField = document.querySelector('#bonus');
+        if (parseInt(sumField.value) >= 63) {
+            bonusField.value = 50;
+        }
+        return parseInt(sumField.value)+parseInt(bonusField.value);
+}
+
+function calculateTotal () {
+    let runningSum = 0;
+    for (let field of document.querySelectorAll('input.set')) {
+        if (field.locked) {
+            runningSum += parseInt(field.value);
+        }
+    }
+    runningSum += calculateSumAndBonus();
+
+    let totalField = document.querySelector('#total');
+    totalField.value = runningSum;
+}
+
+/**
+ * disabled a score field and sets its Locked attribute to true.
+ * @param {text input} field 
+ */
+function lockScoreField(field) {
+    if (turnCounter.roll !== 0) {
+        field.disabled = true;
+        field.locked = true;
+    }
+
+}
+
+function lockInScore(field) {
+    lockScoreField(field);
+    for (let field of document.querySelectorAll('input.calcField')) {
+        field.calcScore;
+    }
+    resetRound();
+    calculateTotal();
+}
+
+
+//---------- EVENT LISTENERS SETUP -----------------------------------------------------------------------------------------------------------
+rollButton.addEventListener('click', () => rollButtonAction())
+
+for (let die of dice) {
+    die.addEventListener('click', (e) => ToggleLocked(e.target))
+}
+
+for (let field of document.querySelectorAll('input.score')) {
+    field.addEventListener('click', (e) => lockInScore(e.target))
+}
+
+
+//---------- INITIAL SETUP -----------------------------------------------------------------------------------------------------------
+setFieldsReadOnly();
+resetAllScores();
+resetRound();
+
+
+
+
+
+
 
