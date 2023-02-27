@@ -502,7 +502,7 @@ function lockInScore(field) {
     calculateTotal();
 
     if (checkForGameEnd()) {
-        //gør noget
+        showWinAlert();
     } else {
         resetRound();
     }
@@ -510,13 +510,21 @@ function lockInScore(field) {
 }
 
 function checkForGameEnd() {
-    let scoreFields = document.querySelectorAll('score');
+    let scoreFields = document.querySelectorAll('input.score');
     for (let field of scoreFields) {
         if (!field.locked) {
             return false;
         }
     }
     return true;
+}
+
+function showWinAlert () {
+    alert("Spillet er slut");
+    setFieldsReadOnly();
+    resetAllScores();
+    resetRound();
+
 }
 
 
