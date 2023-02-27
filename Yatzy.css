@@ -1,7 +1,7 @@
 #gameContainer {
     background-color:beige;
-    margin: 1em;
-    padding: 1em;
+    margin: 5%;
+    padding: 5%;
     min-width: fit-content;
 }
 
@@ -29,12 +29,13 @@ img {
     grid-template-areas: "dice dice dice"
                         "turn . button";
     border-style: solid;
-    padding: 1em;
-    margin: 1em;
+    padding: 3%;
+    margin-bottom: 1em;
 }
 
 #turn {
     grid-area: turn;
+    font-size: 1.5em;
 }
 
 #roll {
@@ -53,8 +54,7 @@ img {
                             "set-label set-input ."
                             "set-label set-input total";
     border-style: solid;
-    padding: 2em;
-    margin: 1em;
+    padding: 3%;
     gap: 1em;
 }
 
@@ -63,27 +63,21 @@ input {
     font-size: 1.2em;
     height: 1em;
     text-align: center;
-    margin: 5px;
+    margin: 0.5em;
+    border-width: 0px;
+    padding: 2px;
 }
 
 label {
     font-size: 1.2em;
     height: 1em;
-    margin: 1%;
-    margin: 5px;
+    margin: 0.5em;
+    padding: 2px;
+
 }
 
 .score {
     display: block;
-    
-}
-
-label.score {
-    /**
-    layout af labels virker ikke uden at der er en border på, så nu har den fået en med samme farve som baggrunden.
-    **/
-    border-style: dashed;
-    border-color: beige;
 }
 
 #num-labels {
@@ -103,14 +97,23 @@ label.score {
 }
 
 #sumBonus {
-grid-area: sumBonus;
-text-align: right;
+    grid-area: sumBonus;
+    text-align: right;
+}
 
+#sumBonus>input {
+    background-color: beige;
 }
 
 #totalFelt {
     grid-area: total;
-    text-align: right;    
+    text-align: right;   
+}
+
+#totalFelt>input {
+    background-color: beige;
+    font-weight: bold;
+    font-size: 1.5em;
 }
 
 
@@ -166,21 +169,6 @@ text-align: right;
         height: 2em;
         overflow: wrap;
         
-    }
-
-    #gameContainer {
-        margin: 0.5em;
-        padding: 0.5em;
-    }
-
-    #top{
-        margin: 0.5em;
-        padding: 0.5em;
-    }
-
-    #bottom {
-        margin: 0.5em;
-        padding: 0.5em;
     }
 }
 

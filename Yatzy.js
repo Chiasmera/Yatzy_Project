@@ -210,6 +210,14 @@ function resetRound() {
     turnCounter.textContent = 'New round started!'
     rollButton.disabled = false;
 
+    for (let field of document.querySelectorAll('input')) {
+        if (!field.locked) {
+            field.value = 0;
+        }
+    }
+
+    calculateTotal()
+
 
 }
 
@@ -424,6 +432,7 @@ function resetAllScores() {
     for (let field of document.querySelectorAll('input')) {
         field.value = 0;
         field.locked = false;
+        field.style.backgroundColor = 'darksalmon';
     }
 }
 
@@ -482,6 +491,7 @@ function lockScoreField(field) {
     if (turnCounter.roll !== 0) {
         field.disabled = true;
         field.locked = true;
+        field.style.backgroundColor = 'beige';
     }
 
 }
@@ -495,6 +505,7 @@ function lockInScore(field) {
     calculateTotal();
 
     if (checkForGameEnd()) {
+        resetRound();
         showWinAlert();
     } else {
         resetRound();
@@ -513,7 +524,7 @@ function checkForGameEnd() {
 }
 
 function showWinAlert () {
-    alert("Spillet er slut");
+    alert(`Spillet er slut\nDin endelige score er: ${parseInt(document.querySelector('#total').value)} `);
     setFieldsReadOnly();
     resetAllScores();
     resetRound();
