@@ -336,16 +336,17 @@ resetRound();
 
 
 
+
 /**
  * Returns points for one pair (for the face value giving highest points).
  * Returns 0, if there aren't 2 dice with the same face value.
  */
 let onePairPoints = () => {
     let maxIndex = 0, pairs = 0; 
-    let counts = resultsList;
-    for (let i of counts) {
-        if (i == pairs && i > maxIndex) {
-            maxIndex = i;
+
+    for (let i in resultsList) {
+        if (resultsList[i] == pairs && resultsList[i] > maxIndex) {
+            maxIndex = resultsList[i];
         }
     }
     return maxIndex * 2;
@@ -358,13 +359,13 @@ let onePairPoints = () => {
  */
 let twoPairPoints = () => {
     let pair1 = 0, pair2 = 0, result = 0;
-    let counts = resultsList;
-    for (let i of counts) {
-        if (i >= 2) {
+
+    for (let i in resultsList) {
+        if (resultsList[i] >= 2) {
             if (pair1 == 0) {
-                pair1 = i * 2;
+                pair1 = resultsList[i] * 2;
             } else {
-                pair2 = i * 2;
+                pair2 = resultsList[i] * 2;
                 result = pair1 + pair2;
             }
 
@@ -381,10 +382,10 @@ let twoPairPoints = () => {
 let threeSamePoints = () => {
     let maxIndex = 0;
     let three = 3;
-    let counter = resultsList;
-    for (let i in counter) {
-        if (i >= three) {
-            maxIndex = i;
+
+    for (let i in resultsList) {
+        if (resultsList[i]>= three) {
+            maxIndex = resultsList[i];
 
         }
     }
@@ -398,9 +399,9 @@ let threeSamePoints = () => {
 let fourSamePoints = () => {
     let maxIndex = 0;
     let four = 4;
-    let counter = resultsList;
-    for (let i of counter) {
-        if (i >= four) {
+
+    for (let i in resultsList) {
+        if (resultsList[i] >= four) {
             maxIndex = i;
         }
     }
@@ -414,13 +415,12 @@ let fourSamePoints = () => {
  */
 fullHousePoints = () => {
     let two = 0, three = 0, result = 0;
-    let counter = resultsList;
-    for (let i of counter) {
-        if (i == 2) {
-            two = i;
+    for (let i in resultsList) {
+        if (resultsList[i] == 2) {
+            two = resultsList[i];
         }
-        if (i== 3) {
-            three = i;
+        if (resultsList[i]== 3) {
+            three = resultsList[i];
         }
         if (two != 0 && three != 0) {
             result = two * 2 + three * 3;
@@ -436,9 +436,8 @@ fullHousePoints = () => {
  */
 let smallStraightPoints = () => {
     let number = 0, result = 0;
-    let counter = resultsList;
-    for (let i of counter) {
-        if (i == 1 && i != 6) {
+    for (let i in resultsList) {
+        if (resultsList[i] == 1 && resultsList[i]!= 6) {
             number++;
         }
         if (number == 5) {
@@ -454,10 +453,9 @@ let smallStraightPoints = () => {
  */
 let largeStraightPoints = () => {
     let number = 0, result = 0;
-    let counter = resultsList;
-    for (let i of counter) {
+    for (let i in resultsList) {
     
-        if (i == 1 && i != 1) {
+        if (resultsList[i] == 1 && resultsList[i] != 1) {
             number++;
         }
         if (number == 5) {
@@ -473,7 +471,7 @@ let largeStraightPoints = () => {
  */
 let chancePoints = () => {
     let sum = 0;
-    for (let value of diceValues) {
+    for (let value in diceValues) {
         sum += value;
     }
     return sum;
@@ -486,9 +484,8 @@ let chancePoints = () => {
 let yatzyPoints = () => {
     let maxIndex = 0;
     let five = 5;
-    let counter = resultsList;
-    for (let i in counter) {
-        if (i == five) {
+    for (let i in resultsList) {
+        if (resultsList[i] == five) {
             maxIndex = 50;
             break;
         }
