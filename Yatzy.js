@@ -231,7 +231,7 @@ function rollButtonAction () {
     countResults();
     updateTurnCounter();
 
-    calcScores();
+    calcAllScoreFields();
 }
 
 //___________Bottom_Functions__________________________________________
@@ -287,7 +287,7 @@ function resetAllScores () {
 /**
  * Iterates through all non-locked score fields and evokes their corresponding calculation function, as stored in the calculationFunctions object.
  */
-function calcScores () {
+function calcAllScoreFields () {
     for (let field of document.querySelectorAll('input')) {
         if (!field.locked){
            field.value = field.calcScore();
