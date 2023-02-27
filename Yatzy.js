@@ -163,9 +163,9 @@ function rollUnlockedDice() {
  * Locks a die, preventing it from being rolled. If the die is already locked and was locked during the same turn, unlocks it. Does nothing before player has rolled the dice.
  * @param {image element of Dice class} die An img element with the class 'Dice'
  */
-function ToggleLocked(die) {
-    if (!die.locked && turnCounter.roll !== 0) {
-        die.locked = turnCounter.roll;
+function ToggleLocked (die) {
+    if(!die.locked && turnCounter.roll !== 0) {
+        die.locked = true;
 
         switch (die.result) {
             case 1:
@@ -189,8 +189,8 @@ function ToggleLocked(die) {
             default:
                 console.log(`Something went wrong setting locked image for ${die}`);
         }
-    } else if (die.locked >= turnCounter.roll) {
-        die.locked = 0;
+    } else if (die.locked) {
+        die.locked = false;
         setDieImage(die);
 
     }
@@ -231,7 +231,7 @@ function rollButtonAction() {
     countResults();
     updateTurnCounter();
 
-    calcScores();
+    calcAllScoreFields();
 }
 
 //___________Bottom_Functions__________________________________________
@@ -287,7 +287,7 @@ function resetAllScores() {
 /**
  * Iterates through all non-locked score fields and evokes their corresponding calculation function, as stored in the calculationFunctions object.
  */
-function calcScores() {
+function calcAllScoreFields () {
     for (let field of document.querySelectorAll('input')) {
         if (!field.locked) {
             field.value = field.calcScore();
