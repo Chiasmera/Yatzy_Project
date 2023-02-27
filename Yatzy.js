@@ -163,8 +163,8 @@ function rollUnlockedDice() {
  * Locks a die, preventing it from being rolled. If the die is already locked and was locked during the same turn, unlocks it. Does nothing before player has rolled the dice.
  * @param {image element of Dice class} die An img element with the class 'Dice'
  */
-function ToggleLocked (die) {
-    if(!die.locked && turnCounter.roll !== 0) {
+function ToggleLocked(die) {
+    if (!die.locked && turnCounter.roll !== 0) {
         die.locked = true;
 
         switch (die.result) {
@@ -287,7 +287,7 @@ function resetAllScores() {
 /**
  * Iterates through all non-locked score fields and evokes their corresponding calculation function, as stored in the calculationFunctions object.
  */
-function calcAllScoreFields () {
+function calcAllScoreFields() {
     for (let field of document.querySelectorAll('input')) {
         if (!field.locked) {
             field.value = field.calcScore();
@@ -342,12 +342,13 @@ resetRound();
  * Returns 0, if there aren't 2 dice with the same face value.
  */
 let onePairPoints = () => {
-    let maxIndex = 0, pairs = 0; 
+    let maxIndex = 0, pairs = 2, faceValueCounter = 1;
 
     for (let i in resultsList) {
-        if (resultsList[i] == pairs && resultsList[i] > maxIndex) {
-            maxIndex = resultsList[i];
+        if (resultsList[i] >= pairs) {
+            maxIndex = faceValueCounter;
         }
+        faceValueCounter++;
     }
     return maxIndex * 2;
 }
@@ -358,18 +359,18 @@ let onePairPoints = () => {
  * with a different face value.
  */
 let twoPairPoints = () => {
-    let pair1 = 0, pair2 = 0, result = 0;
-
+    let pair1 = 0, pair2 = 0, result = 0, faceValueCounter = 1;
     for (let i in resultsList) {
         if (resultsList[i] >= 2) {
             if (pair1 == 0) {
-                pair1 = resultsList[i] * 2;
+                pair1 = faceValueCounter * 2;
             } else {
-                pair2 = resultsList[i] * 2;
+                pair2 = faceValueCounter * 2;
                 result = pair1 + pair2;
             }
 
         }
+        faceValueCounter++;
     }
     return result;
 }
@@ -382,12 +383,13 @@ let twoPairPoints = () => {
 let threeSamePoints = () => {
     let maxIndex = 0;
     let three = 3;
-
+    let faceValueCounter = 1;
     for (let i in resultsList) {
-        if (resultsList[i]>= three) {
-            maxIndex = resultsList[i];
+        if (resultsList[i] >= three) {
+            maxIndex = faceValueCounter;
 
         }
+        faceValueCounter++;
     }
     return maxIndex * three;
 }
@@ -399,11 +401,12 @@ let threeSamePoints = () => {
 let fourSamePoints = () => {
     let maxIndex = 0;
     let four = 4;
-
+    let faceValueCounter = 1;
     for (let i in resultsList) {
         if (resultsList[i] >= four) {
-            maxIndex = i;
+            maxIndex = faceValueCounter;
         }
+        faceValueCounter++;
     }
     return maxIndex * four;
 
@@ -414,17 +417,18 @@ let fourSamePoints = () => {
  * face value and 2 dice a different face value.
  */
 fullHousePoints = () => {
-    let two = 0, three = 0, result = 0;
+    let two = 0, three = 0, result = 0, faceValueCounter = 1;
     for (let i in resultsList) {
         if (resultsList[i] == 2) {
-            two = resultsList[i];
+            two = faceValueCounter;
         }
-        if (resultsList[i]== 3) {
-            three = resultsList[i];
+        if (resultsList[i] == 3) {
+            three = faceValueCounter;
         }
         if (two != 0 && three != 0) {
             result = two * 2 + three * 3;
         }
+        faceValueCounter++;
 
     }
     return result;
@@ -435,14 +439,15 @@ fullHousePoints = () => {
  * 1,2,3,4,5.
  */
 let smallStraightPoints = () => {
-    let number = 0, result = 0;
+    let number = 0, result = 0, faceValueCounter = 1;
     for (let i in resultsList) {
-        if (resultsList[i] == 1 && resultsList[i]!= 6) {
+        if (resultsList[i] == 1 && faceValueCounter != 6) {
             number++;
         }
         if (number == 5) {
             result = 1 + 2 + 3 + 4 + 5;
         }
+        faceValueCounter++;
     }
     return result;
 }
@@ -452,15 +457,16 @@ let smallStraightPoints = () => {
  * 2,3,4,5,6.
  */
 let largeStraightPoints = () => {
-    let number = 0, result = 0;
+    let number = 0, result = 0, faceValueCounter = 1;
     for (let i in resultsList) {
-    
-        if (resultsList[i] == 1 && resultsList[i] != 1) {
+
+        if (resultsList[i] == 1 && faceValueCounter!= 1) {
             number++;
         }
         if (number == 5) {
             result = 2 + 3 + 4 + 5 + 6;
         }
+        faceValueCounter++;
 
     }
     return result;
@@ -470,9 +476,10 @@ let largeStraightPoints = () => {
  * Returns points for chance.
  */
 let chancePoints = () => {
-    let sum = 0;
-    for (let value in diceValues) {
-        sum += value;
+    let sum = 0, faceValueCounter = 1;
+    for (let value in resultsList) {
+        sum += resultsList[value] * faceValueCounter;
+        faceValueCounter++;
     }
     return sum;
 }
