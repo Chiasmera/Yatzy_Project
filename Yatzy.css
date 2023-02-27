@@ -108,7 +108,7 @@ text-align: right;
 
 }
 
-#total {
+#totalFelt {
     grid-area: total;
     text-align: right;    
 }
