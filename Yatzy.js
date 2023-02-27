@@ -1,10 +1,3 @@
-// TODO
-/*
-- Check for hvornår spillet slutter
-- Alert som viser point
-- Mulighed for at genstarte spil
-*/
-
 
 //---------- VARIABLES -----------------------------------------------------------------------------------------------------------
 /**
