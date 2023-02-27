@@ -341,8 +341,8 @@ resetRound();
  * Returns 0, if there aren't 2 dice with the same face value.
  */
 let onePairPoints = () => {
-    let maxIndex = pairs = 0; 
-    let counts = updateTurnCounter();
+    let maxIndex = 0, pairs = 0; 
+    let counts = resultsList;
     for (let i of counts) {
         if (counts[i] == pairs && i > maxIndex) {
             maxIndex = i;
@@ -357,8 +357,8 @@ let onePairPoints = () => {
  * with a different face value.
  */
 let twoPairPoints = () => {
-    let pair1 = pair2 = result = 0;
-    let counts = updateTurnCounter();
+    let pair1 = 0, pair2 = 0, result = 0;
+    let counts = resultsList;
     for (let i of counts) {
         if (counts[i] >= 2) {
             if (pair1 == 0) {
@@ -413,7 +413,7 @@ let fourSamePoints = () => {
  * face value and 2 dice a different face value.
  */
 fullHousePoints = () => {
-    let two = three = result = 0;
+    let two = 0, three = 0, result = 0;
     let counter = resultsList;
     for (let i of counter) {
         if (counter[i] == 2) {
@@ -435,7 +435,7 @@ fullHousePoints = () => {
  * 1,2,3,4,5.
  */
 let smallStraightPoints = () => {
-    let number = result = 0;
+    let number = 0, result = 0;
     let counter = resultsList;
     for (let i of counter) {
         if (counter[i] == 1 && i != 6) {
@@ -453,7 +453,7 @@ let smallStraightPoints = () => {
  * 2,3,4,5,6.
  */
 let largeStraightPoints = () => {
-    let number = result = 0;
+    let number = 0, result = 0;
     let counter = resultsList;
     for (let i of counter) {
     
