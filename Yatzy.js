@@ -165,7 +165,7 @@ function rollUnlockedDice () {
  */
 function ToggleLocked (die) {
     if(!die.locked && turnCounter.roll !== 0) {
-        die.locked = turnCounter.roll;
+        die.locked = true;
 
         switch (die.result) {
             case 1 : 
@@ -189,8 +189,8 @@ function ToggleLocked (die) {
             default:
                 console.log(`Something went wrong setting locked image for ${die}`);
         }
-    } else if (die.locked >= turnCounter.roll) {
-        die.locked = 0;
+    } else if (die.locked) {
+        die.locked = false;
         setDieImage(die);
 
     }
